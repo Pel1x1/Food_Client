@@ -1,0 +1,57 @@
+// SCSS variables for use in component modules and mixins.
+// Import in each component: @use "@/shared/styles/variables" as *;
+
+// Colors
+$loader-bg: #b5460f;
+$brand: #b5460f;
+$brand-hover: #c3541b;
+$brand-active: #872d01;
+
+$text-primary: #000;
+$text-secondary: #afadb5;
+$text-accent: #b5460f;
+
+$card-bg: #fff;
+$card-image-bg: #fff;
+$card-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
+$page-bg: #f7f7f7;
+
+$button-primary-bg: $brand;
+$button-primary-text: #fff;
+$button-primary-bg-hover: $brand-hover;
+$button-primary-bg-active: $brand-active;
+$button-primary-bg-disabled: #d9d9d9;
+
+$input-bg: #fff;
+$input-placeholder: $text-secondary;
+
+$checkbox-bg: #fff;
+$checkbox-border-hover: $brand;
+$checkbox-bg-hover: #fff;
+$checkbox-bg-disabled: rgba(255, 255, 255, 0.5);
+$checkbox-check-disabled: rgba(0, 0, 0, 0.2);
+
+// Radius
+$radius-xs: 6px;
+$radius-sm: 8px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 20px;
+
+// Spacing
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+$space-lx: 20px;
+$space-xl: 24px;
+
+// Layout
+$container-padding-xs: 16px;
+$container-padding-sm: 24px;
+$container-padding-md: 32px;
+$container-padding-lg: 48px;
+
+// Typography
+$font-main: 'Montserrat', sans-serif;
+$font-heading: 'Playfair Display', serif;

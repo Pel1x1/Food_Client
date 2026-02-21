@@ -1,0 +1,613 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/mixins" as *;
+
+
+// Блок: recipe
+.recipe {
+  padding-bottom: 80px;
+  background: #ffc0763b;
+
+  @include up(xs) {
+    padding-bottom: 60px;
+  }
+}
+
+
+// Элемент: container
+.recipe__container {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 24px;
+
+  @media (max-width: 767px) {
+    padding: 30px 16px;
+    gap: 20px;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+
+    @include up(xs) {
+      font-size: 1.7rem;
+    }
+
+    @media (max-width: 767px) {
+      font-size: 2rem;
+    }
+  }
+
+  .recipe__backBtn {
+    margin: 0;
+    font-size: 1.3rem;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: $radius-lg;
+    backdrop-filter: blur(10px);
+    box-shadow: $card-shadow;
+
+    @include up(xs) {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 767px) {
+      font-size: 1.1rem;
+      padding: 10px 20px;
+    }
+  }
+}
+
+
+// Элемент: hero
+.recipe__hero {
+  height: 700px; // было 7000px
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+
+  @include up(xs) {
+    height: 300px;
+  }
+
+  @media (max-width: 767px) {
+    height: 350px;
+  }
+
+  @include up(md) {
+    height: 500px;
+  }
+
+  @include up(lg) {
+    height: 600px;
+  }
+}
+
+
+// Элемент: hero-img-container
+.recipe__heroImgContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+// Элемент: hero-img
+.recipe__heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 10s linear;
+}
+
+.recipe__hero:hover .recipe__heroImg {
+  transform: scale(1.1);
+}
+
+
+// Элемент: hero-overlay-gradient
+.recipe__heroOverlayGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.2)
+  );
+}
+
+
+// Элемент: hero-info-container
+.recipe__heroInfoContainer {
+  position: relative;
+  z-index: 10;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $container-padding-lg 60px;
+  color: #fff;
+
+  @include up(xs) {
+    padding: 0 20px 40px;
+  }
+
+  @include up(lg) {
+    padding: 0 $container-padding-lg 70px;
+  }
+
+  @media (min-width: 1920px) {
+    max-width: 1600px;
+  }
+}
+
+
+// Элемент: back-btn
+.recipe__backBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: $space-xl;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 1;
+    transform: translateX(-8px);
+  }
+}
+
+
+// Элемент: category-badge
+.recipe__categoryBadge {
+  background-color: $brand;
+  color: #fff;
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: $radius-xl;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: $space-md;
+  text-transform: uppercase;
+}
+
+
+// Элемент: title
+.recipe__title {
+  margin-bottom: $space-xl;
+  max-width: 800px;
+  line-height: 1.1;
+
+  @include up(xs) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 2.2rem;
+  }
+
+  @include up(md) {
+    font-size: 3.2rem;
+  }
+}
+
+
+// Элемент: stats-strip
+.recipe__statsStrip {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+
+  @include up(xs) {
+    gap: 15px;
+  }
+
+  @media (max-width: 767px) {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  @include up(md) {
+    gap: 30px;
+  }
+
+  @include up(lg) {
+    gap: 50px;
+  }
+}
+
+
+// Элемент: stat-item
+.recipe__statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+// Элемент: stat-val
+.recipe__statVal {
+  font-size: 40px;
+
+  @media (max-width: 767px) {
+    font-size: 1.8rem;
+  }
+}
+
+
+// Элемент: stat-divider
+.recipe__statDivider {
+  width: 1px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+// Элемент: content-container
+.recipe__contentContainer {
+  max-width: 1440px;
+  margin: -20px auto 0;
+  padding: 0 $container-padding-lg;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 60px;
+  position: relative;
+  z-index: 20;
+
+  @include up(xs) {
+    padding: 0 20px;
+    gap: 40px;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 24px;
+  }
+
+  @include up(md) {
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+  }
+
+  @include up(lg) {
+    grid-template-columns: 500px 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 1920px) {
+    max-width: 1600px;
+  }
+}
+
+
+// Элемент: right
+.recipe__right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+// Элемент: sidebar
+.recipe__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+
+  @media (max-width: 767px) {
+    order: 2;
+  }
+}
+
+
+// Элемент: sidebar-card
+.recipe__sidebarCard {
+  background-color: $card-bg;
+  padding: 30px;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+
+  @media (max-width: 767px) {
+    padding: 24px;
+  }
+}
+
+
+// Элемент: action-card
+.recipe__actionCard {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+
+// Элемент: action-btn-main
+.recipe__actionBtnMain {
+  width: 100%;
+  height: 60px;
+  background-color: $brand;
+  color: #fff;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $brand-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(181, 70, 15, 0.3);
+  }
+}
+
+
+// Модификатор: action-btn-main--saved
+.recipe__actionBtnMainSaved {
+  background-color: $text-primary;
+}
+
+
+// Элемент: secondary-actions
+.recipe__secondaryActions {
+  display: flex;
+  gap: $space-md;
+  justify-content: center;
+}
+
+
+// Элемент: action-btn-circle
+.recipe__actionBtnCircle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e6e6e6;
+    transform: scale(1.1);
+  }
+}
+
+
+// Элемент: nutrition-card
+.recipe__nutritionCard {
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: $space-lg;
+  }
+}
+
+
+// Элемент: nutrition-list
+.recipe__nutritionList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+
+// Элемент: nutrition-item
+.recipe__nutritionItem {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: $space-sm;
+  border-bottom: 1px solid #f0f0f0;
+
+  strong {
+    color: $brand;
+  }
+}
+
+
+// Элемент: main
+.recipe__main {
+  background-color: $card-bg;
+  padding: 60px;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+
+  @include up(xs) {
+    padding: 30px 20px;
+  }
+
+  @media (max-width: 767px) {
+    order: 1;
+    padding: 40px 24px;
+  }
+
+  @include up(md) {
+    padding: 50px 40px;
+  }
+
+  @include up(lg) {
+    padding: 70px 60px;
+  }
+}
+
+
+// Элемент: summary-text
+.recipe__summaryText {
+  max-width: 800px;
+  line-height: 1.7;
+
+  b {
+    font-weight: 700;
+  }
+
+  a {
+    color: $brand;
+    text-decoration: underline;
+  }
+}
+
+
+// Элемент: section
+.recipe__section {
+  margin-bottom: 60px;
+}
+
+
+// Элемент: section-title
+.recipe__sectionTitle {
+  font-size: 2.5rem;
+  margin-bottom: $space-xl;
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: $brand;
+  }
+}
+
+
+// Элемент: ingredients-list
+.recipe__ingredientsList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-md;
+  list-style: none;
+  padding: 0;
+
+  @include up(xs) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+
+  @include up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    color: #444;
+  }
+}
+
+
+// Элемент: dot
+.recipe__dot {
+  width: 8px;
+  height: 8px;
+  background-color: $brand;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+
+// Элемент: steps-list
+.recipe__stepsList {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+
+// Элемент: step-item
+.recipe__stepItem {
+  display: flex;
+  gap: 30px;
+}
+
+
+// Элемент: step-number
+.recipe__stepNumber {
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: $font-heading;
+  color: $page-bg;
+  -webkit-text-stroke: 1px $text-secondary;
+  line-height: 1;
+
+  @include up(xs) {
+    font-size: 2rem;
+  }
+}
+
+
+// Элемент: step-text
+.recipe__stepText {
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+}
+
+
+// Элемент: ingredients-equipment-grid
+.recipe__ingredientsEquipmentGrid {
+  display: grid;
+  gap: 40px;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+// Элемент: ingredients-block
+.recipe__ingredientsBlock {}
+
+
+// Элемент: equipment-block
+.recipe__equipmentBlock {}
+
+
+// Элемент: subsection-title
+.recipe__subsectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: $space-md;
+  font-weight: 700;
+}

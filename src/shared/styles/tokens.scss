@@ -1,0 +1,131 @@
+/* Global resets and variables */
+@use 'sass:map';
+@use 'variables' as v;
+@use './mixins';
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap");
+
+:root {
+  --loader-bg: #{v.$loader-bg};
+  --brand: #{v.$brand};
+  --brand-hover: #{v.$brand-hover};
+  --brand-active: #{v.$brand-active};
+
+  --text-primary: #{v.$text-primary};
+  --text-secondary: #{v.$text-secondary};
+  --text-accent: #{v.$text-accent};
+
+  --card-bg: #{v.$card-bg};
+  --card-image-bg: #{v.$card-image-bg};
+  --card-shadow: #{v.$card-shadow};
+  --dropdown-options-bg: #{v.$card-bg};
+  --dropdown-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+  --page-bg: #{v.$page-bg};
+  --input-bg-hover: #f5f5f5;
+  --input-bg-selected: #e6f7f6;
+
+  --button-primary-bg: #{v.$button-primary-bg};
+  --button-primary-text: #{v.$button-primary-text};
+  --button-primary-bg-hover: #{v.$button-primary-bg-hover};
+  --button-primary-text-hover: #{v.$button-primary-text};
+  --button-primary-bg-active: #{v.$button-primary-bg-active};
+  --button-primary-text-active: #{v.$button-primary-text};
+  --button-primary-bg-disabled: #{v.$button-primary-bg-disabled};
+  --button-primary-text-disabled: #{v.$button-primary-text};
+
+  --input-text: #{v.$text-primary};
+  --input-bg: #{v.$input-bg};
+  --input-placeholder: #{v.$input-placeholder};
+  --input-border: #{v.$input-bg};
+  --input-bg-focus: #{v.$input-bg};
+  --input-border-focus: #{v.$brand};
+  --input-icon: #{v.$text-secondary};
+
+  --checkbox-bg: #{v.$checkbox-bg};
+  --checkbox-border: #{v.$checkbox-bg};
+  --checkbox-bg-hover: #{v.$checkbox-bg-hover};
+  --checkbox-border-hover: #{v.$checkbox-border-hover};
+  --checkbox-bg-disabled: #{v.$checkbox-bg-disabled};
+  --checkbox-border-disabled: rgba(255, 255, 255, 0);
+  --checkbox-check: #{v.$brand};
+  --checkbox-check-hover: #{v.$brand};
+  --checkbox-check-disabled: #{v.$checkbox-check-disabled};
+
+  --radius-xs: #{v.$radius-xs};
+  --radius-sm: #{v.$radius-sm};
+  --radius-md: #{v.$radius-md};
+  --radius-lg: #{v.$radius-lg};
+  --radius-xl: #{v.$radius-xl};
+
+  --space-xs: #{v.$space-xs};
+  --space-sm: #{v.$space-sm};
+  --space-md: #{v.$space-md};
+  --space-lg: #{v.$space-lg};
+  --space-lx: #{v.$space-lx};
+  --space-xl: #{v.$space-xl};
+
+  --container-padding-xs: #{v.$container-padding-xs};
+  --container-padding-sm: #{v.$container-padding-sm};
+  --container-padding-md: #{v.$container-padding-md};
+  --container-padding-lg: #{v.$container-padding-lg};
+
+  --font-main: #{v.$font-main};
+  --font-heading: #{v.$font-heading};
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--page-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand);
+  border-radius: var(--radius-xl);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-hover);
+}

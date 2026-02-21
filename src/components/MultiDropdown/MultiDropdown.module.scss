@@ -1,0 +1,47 @@
+@use "@/shared/styles/variables" as *;
+
+.multiDropdown {
+  position: relative;
+  width: 100%;
+}
+
+.optionsList {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: $card-bg;
+  border: 1px solid $input-bg;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-radius: $radius-md;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: $text-secondary transparent;
+}
+
+.option {
+  padding: 14px 12px;
+  cursor: pointer;
+  color: $text-primary;
+  transition: background-color 0.2s ease;
+  font-family: inherit;
+  font-size: inherit;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.optionSelected {
+  background-color: #e6f7f6;
+  color: $text-accent;
+}
+
+.empty {
+  padding: 14px 12px;
+  color: $text-secondary;
+  text-align: center;
+  font-family: inherit;
+}
