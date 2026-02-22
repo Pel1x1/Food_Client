@@ -1,0 +1,38 @@
+@use "@/shared/styles/variables" as *;
+
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $button-primary-bg;
+  gap: 8px;
+  border: none;
+  color: $button-primary-text;
+  padding: 14px 20px;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: $radius-md;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background-color: $button-primary-bg-hover;
+  }
+
+  &:active:not(:disabled):not(.disabled) {
+    background-color: $button-primary-bg-active;
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: $button-primary-bg-disabled;
+}
+
+.content {
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+}

@@ -1,0 +1,331 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/mixins" as *;
+
+
+// Блок: recipes
+.recipes {
+  padding-bottom: 4rem;
+  background: #ffc0763b;
+}
+
+
+// Элемент: hero (героическая секция)
+.recipes__hero {
+  height: 500px;
+  position: relative;
+  background-image: url(../../static/image\ 2.png);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+
+// Элемент: hero-overlay
+.recipes__heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.6)
+  );
+}
+
+
+// Элемент: hero-content
+.recipes__heroContent {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  padding: 0 $container-padding-md;
+  transform: translateY(20px);
+  animation: heroFadeUp 0.8s ease-out forwards;
+}
+
+
+@keyframes heroFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+// Элемент: hero-title
+.recipes__heroTitle {
+  font-size: 2.4rem;
+  font-family: $font-heading;
+  font-weight: 800;
+  margin-bottom: $space-md;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+
+  // медиазапросы ВНУТРИ класса
+  @include up(xs) {
+    font-size: 2.8rem;
+  }
+
+  @include up(sm) {
+    font-size: 3.5rem;
+  }
+
+  @include up(lg) {
+    font-size: 5rem;
+  }
+}
+
+
+// Элемент: hero-subtitle
+.recipes__heroSubtitle {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+  font-weight: 500;
+
+  @include up(xs) {
+    font-size: 1.1rem;
+  }
+
+  @include up(lg) {
+    font-size: 1.5rem;
+  }
+}
+
+
+// Элемент: container
+.recipes__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 $container-padding-sm;
+
+  @include up(sm) {
+    padding: 0 $container-padding-md;
+  }
+
+  @include up(md) {
+    padding: 0 $container-padding-lg;
+  }
+}
+
+
+// Элемент: search-filter-section
+.recipes__searchFilterSection {
+  margin-top: -50px;
+  position: relative;
+  z-index: 20;
+}
+
+
+// Элемент: search-filter-bar
+.recipes__searchFilterBar {
+  background-color: $card-bg;
+  padding: $space-md;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  align-items: stretch;
+
+  @include up(sm) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $space-lg;
+    align-items: center;
+  }
+}
+
+
+// Элемент: search-input-group
+.recipes__searchInputGroup {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: $page-bg;
+  border-radius: $radius-lg;
+  padding: 0 $space-lg;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &:focus-within {
+    border-color: $brand;
+  }
+}
+
+
+// Элемент: search-input
+.recipes__searchInput {
+  width: 100%;
+  height: 60px;
+  border: none;
+  background: none;
+  padding: 0 $space-md;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+
+// Элемент: filter-group
+.recipes__filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+  align-items: stretch;
+
+  @include up(sm) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+
+// Элемент: multi-dropdown
+.recipes__multiDropdown {
+  min-width: 220px;
+
+  // Input внутри MultiDropdown
+  :global(input) {
+    height: 60px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  // Корневой div Input
+  & > div > div {
+    height: 60px;
+    border-radius: $radius-lg;
+    border: 2px solid $page-bg;
+    background-color: $card-bg;
+    transition: border-color 0.3s ease;
+
+    &:focus-within {
+      border-color: $brand;
+    }
+  }
+}
+
+
+// Элемент: search-btn
+.recipes__searchBtn {
+  height: 60px;
+  padding: 0 $space-xl;
+  border-radius: $radius-lg;
+  background-color: $brand;
+  color: $button-primary-text;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(181, 70, 15, 0.3);
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $brand-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(181, 70, 15, 0.4);
+  }
+}
+
+
+// Элемент: grid-section
+.recipes__gridSection {
+  padding-top: 80px;
+}
+
+
+// Элемент: grid
+.recipes__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @include up(xs) {
+    gap: 32px;
+  }
+
+  @include up(sm) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px;
+  }
+
+  @include up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include up(lg) {
+    gap: 48px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  :global(a) {
+    text-decoration: none;
+  }
+}
+
+
+// Элемент: no-results
+.recipes__noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem;
+
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: $text-primary;
+  }
+}
+
+
+// Элемент: pagination
+.recipes__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $space-md;
+  margin-top: 60px;
+}
+
+
+// Элемент: pagination-btn
+.recipes__paginationBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $card-bg;
+  color: $text-primary;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+
+  &:hover:not(.recipes__paginationBtnDisabled) {
+    background-color: $brand;
+    color: $button-primary-text;
+    transform: translateY(-3px);
+  }
+}
+
+
+// Модификатор: pagination-btn--active
+.recipes__paginationBtnActive {
+  background-color: $brand;
+  color: $button-primary-text;
+}
+
+
+// Модификатор: pagination-btn--disabled
+.recipes__paginationBtnDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

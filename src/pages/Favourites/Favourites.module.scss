@@ -1,0 +1,163 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/mixins" as *;
+
+// Блок: favouritesPage
+.favouritesPage {
+  padding-bottom: 4rem;
+  background: #ffc0763b;
+  min-height: calc(100vh - 200px);
+}
+
+// Элемент: hero (героическая секция)
+.favouritesPage__hero {
+  height: 500px;
+  position: relative;
+  background-image: url(../../static/image\ 2.png);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+// Элемент: hero-overlay
+.favouritesPage__heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.6)
+  );
+}
+
+// Элемент: hero-content
+.favouritesPage__heroContent {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  padding: 0 $container-padding-md;
+  transform: translateY(20px);
+  animation: heroFadeUp 0.8s ease-out forwards;
+}
+
+@keyframes heroFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Элемент: hero-title
+.favouritesPage__heroTitle {
+  font-size: 2.4rem;
+  font-family: $font-heading;
+  font-weight: 800;
+  margin-bottom: $space-md;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+
+  @include up(xs) {
+    font-size: 2.8rem;
+  }
+
+  @include up(sm) {
+    font-size: 3.5rem;
+  }
+
+  @include up(lg) {
+    font-size: 5rem;
+  }
+}
+
+// Элемент: hero-subtitle
+.favouritesPage__heroSubtitle {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+  font-weight: 500;
+
+  @include up(xs) {
+    font-size: 1.1rem;
+  }
+
+  @include up(lg) {
+    font-size: 1.5rem;
+  }
+}
+
+// Элемент: container
+.favouritesPage__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 $container-padding-sm;
+
+  @include up(sm) {
+    padding: 0 $container-padding-md;
+  }
+
+  @include up(md) {
+    padding: 0 $container-padding-lg;
+  }
+}
+
+// Элемент: grid-section
+.favouritesPage__gridSection {
+  padding-top: 80px;
+}
+
+// Элемент: grid
+.favouritesPage__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @include up(xs) {
+    gap: 32px;
+  }
+
+  @include up(sm) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px;
+  }
+
+  @include up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include up(lg) {
+    gap: 48px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  :global(a) {
+    text-decoration: none;
+  }
+}
+
+// Элемент: no-results
+.favouritesPage__noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: $text-primary;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: $text-secondary;
+    margin-bottom: 1rem;
+  }
+}

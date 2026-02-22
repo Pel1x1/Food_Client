@@ -1,0 +1,7 @@
+@use "@/shared/styles/variables" as *;
+
+.cartPage {
+  padding: var(--space-xl) 0;
+  min-height: calc(100vh - 200px);
+}
+

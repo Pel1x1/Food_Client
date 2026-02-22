@@ -1,0 +1,59 @@
+@use "@/shared/styles/variables" as *;
+
+.aiRecipePage {
+  padding: var(--space-xl) 0;
+  min-height: calc(100vh - 200px);
+}
+
+.aiRecipePage__title {
+  margin-bottom: var(--space-md);
+}
+
+.aiRecipePage__subtitle {
+  margin-bottom: var(--space-xl);
+}
+
+.aiRecipePage__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  max-width: 600px;
+}
+
+.aiRecipePage__error {
+  padding: var(--space-md);
+  background-color: var(--input-bg-selected);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+}
+
+.aiRecipePage__result {
+  padding: var(--space-xl);
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+  margin-top: var(--space-xl);
+}
+
+.aiRecipePage__resultTitle {
+  margin-bottom: var(--space-md);
+}
+
+.aiRecipePage__recipeContent {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-lg);
+  background-color: var(--page-bg);
+  border-radius: var(--radius-md);
+}
+
+.aiRecipePage__actions {
+  display: flex;
+  gap: var(--space-md);
+}
+
+@media (max-width: 768px) {
+  .aiRecipePage__actions {
+    flex-direction: column;
+  }
+}
+
