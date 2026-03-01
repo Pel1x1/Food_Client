@@ -1,0 +1,403 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/mixins" as *;
+
+.mealPlanningPage {
+  padding: 80px 0;
+  min-height: calc(100vh - 80px);
+  background: #ffc0763b;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $container-padding-sm;
+
+  @include up(sm) { padding: 0 $container-padding-md; }
+  @include up(md) { padding: 0 $container-padding-lg; }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin-bottom: $space-sm;
+  }
+
+  p { color: $text-secondary; }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: 32px;
+  align-items: flex-start;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.formCard {
+  background-color: $card-bg;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+  padding: $space-xl $space-xl $space-lx;
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+}
+
+.fieldLabel { 
+  font-weight: 600; 
+  color: $text-primary;
+}
+
+.fieldDescription { 
+  color: $text-secondary; 
+  font-size: 0.95rem; 
+}
+
+.timeFrameToggle {
+  display: inline-flex;
+  padding: $space-xs;
+  border-radius: 999px;
+  background-color: rgba($text-secondary, 0.1);
+  gap: $space-xs;
+}
+
+.timeFrameButton {
+  border: none;
+  border-radius: 999px;
+  padding: 6px $space-lg;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: transparent;
+  color: $text-secondary;
+  transition: all 0.2s ease;
+}
+
+.timeFrameButtonActive {
+  background-color: $button-primary-bg;
+  color: $button-primary-text;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  border-radius: $radius-md;
+  border: 1px solid rgba($text-secondary, 0.3);
+  background-color: $input-bg;
+  color: $text-primary;
+  padding: 0 $space-md;
+  font-size: 1rem;
+  
+  &::placeholder {
+    color: $input-placeholder;
+  }
+}
+
+.textarea {
+  width: 100%;
+  min-height: 72px;
+  border-radius: $radius-md;
+  border: 1px solid rgba($text-secondary, 0.3);
+  background-color: $input-bg;
+  color: $text-primary;
+  padding: $space-sm $space-md;
+  font-size: 1rem;
+  resize: vertical;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+}
+
+.generateButton {
+  margin-top: $space-sm;
+  width: 100%;
+  height: 48px;
+  border-radius: $radius-lg;
+  border: none;
+  background-color: $button-primary-bg;
+  color: $button-primary-text;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-sm;
+  transition: background-color 0.2s ease;
+
+  &:hover:not(:disabled) { 
+    background-color: $button-primary-bg-hover; 
+  }
+
+  &:active:not(:disabled) {
+    background-color: $button-primary-bg-active;
+  }
+
+  &:disabled { 
+    background-color: $button-primary-bg-disabled; 
+    cursor: not-allowed; 
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lx;
+}
+
+.nutrientsCard {
+  background-color: $card-bg;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+  padding: $space-lg $space-xl;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $space-lg;
+  position: relative;
+
+  @media (max-width: 768px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.nutrientItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nutrientLabel { color: $text-secondary; font-size: 0.85rem; }
+.nutrientValue { color: $text-primary; font-weight: 700; font-size: 1.05rem; }
+
+.nutrientsNote {
+  position: absolute;
+  bottom: 6px;
+  right: $space-md;
+  font-size: 0.75rem;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.daysContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $space-lg;
+}
+
+.daySection {
+  background-color: $card-bg;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+  overflow: hidden;
+}
+
+.dayHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: $space-md;
+  padding: 14px $space-lx;
+  background: rgba($brand, 0.05);
+  border-bottom: 1px solid rgba($brand, 0.15);
+}
+
+.dayName {
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.dayPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-xs;
+}
+
+.pill {
+  padding: 3px $space-md;
+  border-radius: 999px;
+  background: rgba($card-bg, 0.8);
+  border: 1px solid rgba($brand, 0.2);
+  font-size: 0.78rem;
+  color: $brand-active;
+  font-weight: 500;
+}
+
+.mealsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.mealRow {
+  display: flex;
+  align-items: center;
+  gap: $space-lg;
+  padding: 14px $space-lx;
+  border-bottom: 1px solid $page-bg;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  &:last-child { border-bottom: none; }
+  &:hover      { background: $page-bg; }
+}
+
+.mealTypeTag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 64px;
+  flex-shrink: 0;
+}
+
+.mealTypeIcon { 
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: $page-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-accent;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.mealTypeName {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $text-secondary;
+}
+
+.mealRowImage {
+  width: 240px;
+  height: 180px;
+  border-radius: $radius-md;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.mealRowInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.mealRowTitle {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: $text-primary;
+  margin: 0 0 $space-xs;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mealRowMeta {
+  display: flex;
+  gap: $space-md;
+  font-size: 0.83rem;
+  color: $text-secondary;
+}
+
+.error { 
+  margin-top: $space-md; 
+  color: #b91c1c; 
+}
+
+.emptyState { 
+  text-align: center; 
+  color: $text-secondary; 
+  margin-top: $space-xl; 
+}
+
+.detailsOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.detailsCard {
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  background-color: $card-bg;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+  padding: $space-xl 28px;
+}
+
+.detailsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-lg;
+  margin-bottom: $space-lg;
+}
+
+.closeButton { 
+  border: none; 
+  background: transparent; 
+  font-size: 1.5rem; 
+  cursor: pointer; 
+  color: $text-primary;
+}
+
+.detailsLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: $space-xl;
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.detailsImage {
+  width: 100%;
+  border-radius: $radius-lg;
+  object-fit: cover;
+  max-height: 260px;
+}
+
+.detailsMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+  margin: $space-md 0 18px;
+  font-size: 0.9rem;
+  color: $text-secondary;
+}
+
+.chip {
+  padding: $space-xs $space-md;
+  border-radius: 999px;
+  background-color: rgba($text-secondary, 0.1);
+  color: $text-primary;
+  font-size: 0.85rem;
+}
+
+.ingredientsList { 
+  list-style: disc; 
+  padding-left: 20px; 
+  margin: 0; 
+  color: $text-primary;
+}
+
+.instructions { 
+  margin-top: $space-sm; 
+  white-space: pre-wrap; 
+  color: $text-primary;
+}

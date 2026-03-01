@@ -1,0 +1,201 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/mixins" as *;
+@mixin safeText() {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@mixin clamp($lines) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+}
+
+.card {
+  background-color: $card-bg;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 550px;
+
+  &:hover {
+    transform: translateY(-10px) scale(1.01);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: $card-image-bg;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.08);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  padding: $space-md;
+  height: 100%;
+  min-width: 0;
+}
+
+.bodyText {
+  min-width: 0;
+  
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;       
+  flex-wrap: nowrap;         
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-sm;
+  margin-top: auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.caption {
+  @include safeText();
+  @include clamp(1);
+}
+
+.content {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 50%;
+
+  @include safeText();
+  @include clamp(1);
+
+  white-space: normal;
+  text-overflow: initial;
+}
+
+.title {
+  @include safeText();
+  @include clamp(1);
+}
+
+.subtitle {
+  @include safeText();
+  @include clamp(3);
+}
+
+.action {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 50%;
+
+  > * { 
+    max-width: 100%;
+    min-width: 0;
+    
+  }
+  > * > *{
+    @include safeText();
+    @include clamp(1);
+  }
+}
+
+
+
+@include up(xs) {
+  .card {
+    border-radius: $radius-xl;
+    height: 400px;
+  }
+
+  .body {
+    padding: $space-lg;
+    gap: $space-sm;
+  }
+
+  .title {
+    font-size: 1.05rem;
+  }
+
+  .content {
+    font-size: 1rem;
+  }
+}
+
+@include up(sm) {
+  .card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .body {
+    padding: $space-xl;
+    gap: $space-md;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+@include up(md) {
+  .body {
+    padding: $space-xl $space-xl;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .content {
+    font-size: 1.05rem;
+  }
+}
+
+@include up(lg) {
+  .card {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+    height: 500px;
+  }
+
+  .body {
+    padding: calc($space-xl * 1.1);
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .content {
+    font-size: 1.1rem;
+  }
+}

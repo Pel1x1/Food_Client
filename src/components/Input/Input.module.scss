@@ -1,0 +1,63 @@
+@use "@/shared/styles/variables" as *;
+
+.input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 12px;
+  background-color: $input-bg;
+  border-radius: $radius-md;
+  border: 1px solid $input-bg;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+
+  &:focus-within:not(.disabled) {
+    background-color: $input-bg;
+    border-color: $brand;
+  }
+
+  &.disabled {
+    background-color: $input-bg;
+    border-color: $input-bg;
+    cursor: not-allowed;
+  }
+}
+
+.field {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: $text-primary;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0;
+  margin: 0;
+
+  &::placeholder {
+    color: $input-placeholder;
+    opacity: 1;
+  }
+
+  &:focus {
+    color: $text-primary;
+  }
+}
+
+.input.disabled .field {
+  color: rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-secondary;
+}

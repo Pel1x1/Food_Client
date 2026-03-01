@@ -1,0 +1,342 @@
+@use "@/shared/styles/variables" as *;
+
+@mixin safeText() {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+@mixin clamp($lines) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+}
+
+.randomPage {
+  min-height: calc(100vh - 80px);
+  padding: 80px 0;
+  background: #ffc0763b;
+  display: flex;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    padding: 40px 0;
+  }
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+
+  h1 {
+    margin-bottom: 16px;
+    color: $text-primary;
+  }
+
+  .subtitle {
+    color: $text-secondary;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+}
+
+.contentArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  min-width: 0; 
+}
+
+.emptyCard {
+  text-align: center;
+  padding: 60px 40px;
+  background: $card-bg;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0; 
+
+  h2 {
+    margin: 24px 0 16px;
+    @include safeText();
+    @include clamp(2);
+  }
+}
+
+.emptyText {
+  color: $text-secondary;
+  margin-bottom: 36px;
+  max-width: 360px;
+  line-height: 1.5;
+  @include safeText();
+}
+
+.emptyIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.emptyIcon {
+  color: $text-secondary;
+  opacity: 0.25;
+}
+
+.rollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: $brand;
+  color: #fff;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(181, 70, 15, 0.25);
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  width: 100%;
+  max-width: 300px;
+  min-width: 0;
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  &:hover:not(:disabled) {
+    background: $brand-hover;
+  }
+
+  span {
+    @include safeText();
+    @include clamp(1);
+  }
+
+  .iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; 
+  }
+}
+
+.error {
+  margin-bottom: 20px;
+  color: #e53935;
+  font-weight: 500;
+  @include safeText();
+}
+
+.resultContainer {
+  width: 100%;
+  min-width: 0;
+}
+
+.recipeCard {
+  background: $card-bg;
+  border-radius: $radius-xl;
+  box-shadow: $card-shadow;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  min-width: 0; 
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
+}
+
+.imageBox {
+  width: 45%;
+  position: relative;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 640px) {
+    width: 100%;
+    height: 250px;
+    min-height: 250px;
+  }
+}
+
+.categoryBadge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  color: $brand;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  
+  max-width: calc(100% - 40px);
+  @include safeText();
+  @include clamp(1);
+}
+
+.infoBox {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-width: 0; 
+  h2 {
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+    @include safeText();
+    @include clamp(2); 
+  }
+
+  @media (max-width: 640px) {
+    padding: 24px;
+  }
+}
+
+.meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $brand;
+  font-weight: 600;
+  min-width: 0;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  p {
+    color: $text-primary;
+    margin: 0;
+    @include safeText();
+    @include clamp(1);
+  }
+}
+
+.summary {
+  color: $text-secondary;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  
+  @include safeText();
+  @include clamp(3);
+
+  > div, * {
+    @include safeText();
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: auto;
+  flex-wrap: wrap;
+  min-width: 0;
+  
+  > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+.viewBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: $brand;
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: $radius-lg;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 200px;
+
+  @include safeText();
+
+  &:hover {
+    background: $brand-hover;
+    transform: translateY(-2px);
+  }
+  
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.rollAgainBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: $page-bg;
+  color: $text-primary;
+  border: none;
+  padding: 14px 24px;
+  border-radius: $radius-lg;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  @include safeText();
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: darken($page-bg, 5%);
+    transform: translateY(-2px);
+  }
+  
+  svg {
+    flex-shrink: 0;
+  }
+}
