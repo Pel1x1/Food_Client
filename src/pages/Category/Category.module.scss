@@ -1,0 +1,135 @@
+@use "@/shared/styles/variables" as *;
+@use "@/shared/styles/mixins" as *;
+
+
+.recipes {
+  padding-bottom: 4rem;
+  background: #ffc0763b;
+}
+
+.categoriesHeader {
+  padding: 80px 0 0 0;
+  text-align: center;
+  margin-bottom: 12px;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $text-primary;
+    margin: 0 0 16px 0;
+
+    @media (max-width: 767px) {
+      font-size: 2rem;
+    }
+  }
+
+  p {
+    color: $text-secondary;
+    font-size: 1.1rem;
+  }
+}
+
+.recipes__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 $container-padding-sm;
+
+  @include up(sm) {
+    padding: 0 $container-padding-md;
+  }
+
+  @include up(md) {
+    padding: 0 $container-padding-lg;
+  }
+}
+
+.actionText {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recipes__gridSection {
+  padding-top: 80px;
+}
+
+.recipes__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @include up(xs) {
+    gap: 32px;
+  }
+
+  @include up(sm) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px;
+  }
+
+  @include up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include up(lg) {
+    gap: 48px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  :global(a) {
+    text-decoration: none;
+  }
+}
+
+.recipes__noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem;
+
+  h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: $text-primary;
+  }
+}
+
+.recipes__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $space-md;
+  margin-top: 60px;
+}
+
+.recipes__paginationBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $card-bg;
+  color: $text-primary;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+
+  &:hover:not(.recipes__paginationBtnDisabled) {
+    background-color: $brand;
+    color: $button-primary-text;
+    transform: translateY(-3px);
+  }
+}
+
+.recipes__paginationBtnActive {
+  background-color: $brand;
+  color: $button-primary-text;
+}
+
+.recipes__paginationBtnDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

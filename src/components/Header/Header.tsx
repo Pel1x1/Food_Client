@@ -4,18 +4,20 @@ import classNames from 'classnames';
 import LogoIcon from '@/components/icons/LogoIcon';
 import { LuHeart, LuUser, LuMenu, LuX } from 'react-icons/lu';
 import styles from './Header.module.scss';
+import { AppRoutePaths } from '@/shared/config/routes';
 
 const Header: React.FC = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Recipes', path: '/' },
-    { name: 'Categories', path: '/categories' },
-    { name: 'Favourites', path: '/favourites' },
-    { name: 'Cart', path: '/cart' },
-    { name: 'AI Recipe', path: '/ai-recipe' },
-    { name: 'Profile', path: '/profile' },
+    { name: 'Recipes', path: AppRoutePaths.home },
+    { name: 'Categories', path: AppRoutePaths.categories },
+    { name: 'Favourites', path: AppRoutePaths.favourites },
+    { name: 'Cart', path: AppRoutePaths.cart },
+    { name: 'Meal planning', path: AppRoutePaths.mealPlanning },
+    { name: 'Random Recipe', path: AppRoutePaths.randomRecipe },
+    { name: 'Profile', path: AppRoutePaths.profile },
   ];
 
   const toggleMobile = () => setMobileOpen(!mobileOpen);
@@ -24,7 +26,7 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
-        <Link to="/" className={styles.logo}>
+        <Link to={AppRoutePaths.home} className={styles.logo}>
           <LogoIcon width={40} height={40} />
           <span>Food Client</span>
         </Link>
@@ -48,10 +50,18 @@ const Header: React.FC = () => {
         </nav>
 
         <div className={styles.headerActions}>
-          <Link to="/favourites" className={styles.actionButton} title="Favourites">
+          <Link
+            to={AppRoutePaths.favourites}
+            className={styles.actionButton}
+            title="Favourites"
+          >
             <LuHeart size={20} />
           </Link>
-          <Link to="/profile" className={classNames(styles.actionButton, styles.profileBtn)} title="Profile">
+          <Link
+            to={AppRoutePaths.profile}
+            className={classNames(styles.actionButton, styles.profileBtn)}
+            title="Profile"
+          >
             <LuUser size={20} />
           </Link>
           {/* Бургер внутри actions */}

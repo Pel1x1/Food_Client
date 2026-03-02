@@ -187,28 +187,20 @@
 
 // Элемент: multi-dropdown
 .recipes__multiDropdown {
-  min-width: 220px;
-
-  // Input внутри MultiDropdown
   :global(input) {
     height: 60px;
     font-size: 1rem;
     font-weight: 600;
   }
-
-  // Корневой div Input
-  & > div > div {
-    height: 60px;
-    border-radius: $radius-lg;
-    border: 2px solid $page-bg;
-    background-color: $card-bg;
-    transition: border-color 0.3s ease;
-
-    &:focus-within {
-      border-color: $brand;
-    }
-  }
 }
+
+.actionText {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 
 
 // Элемент: search-btn
@@ -250,12 +242,12 @@
   }
 
   @include up(sm) {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
   }
 
   @include up(md) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @include up(lg) {

@@ -56,6 +56,9 @@
 
 .clamp {
   display: -webkit-box;
-  -webkit-box-orient: vertical;
+  // Используем интерполяцию SCSS, чтобы скрыть свойство от Autoprefixer
+  #{"-webkit-box-orient"}: vertical;
+  -webkit-line-clamp: inherit; /* наследуем из inline style компонента Text */
   overflow: hidden;
+  word-break: break-all;
 }

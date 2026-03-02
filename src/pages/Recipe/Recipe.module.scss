@@ -6,7 +6,7 @@
 .recipe {
   padding-bottom: 80px;
   background: #ffc0763b;
-
+  min-height: 43rem;
   @include up(xs) {
     padding-bottom: 60px;
   }
@@ -571,18 +571,16 @@
 }
 
 
-// Элемент: step-text
-.recipe__stepText {
-  h3 {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-  }
+// Элементы: step-text
+.recipe__stepTextTitle {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
 
-  p {
-    color: #666;
-    font-size: 1.1rem;
-    line-height: 1.7;
-  }
+.recipe__stepTextParagraph {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.7;
 }
 
 

@@ -5,6 +5,18 @@
   width: 100%;
 }
 
+.multiDropdownControl {
+  height: 60px;
+  border-radius: $radius-lg;
+  border: 2px solid $page-bg;
+  background-color: $card-bg;
+  transition: border-color 0.3s ease;
+
+  &:focus-within {
+    border-color: $brand;
+  }
+}
+
 .optionsList {
   position: absolute;
   top: calc(100% + 8px);

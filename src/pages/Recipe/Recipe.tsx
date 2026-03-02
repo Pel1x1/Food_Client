@@ -1,120 +1,30 @@
 // Recipe.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
-import qs from 'qs';
 import Text from '@/components/Text';
 import styles from './Recipe.module.scss';
 import { SlArrowLeft } from "react-icons/sl";
-import { LuTimer, LuUsers, LuFlame, LuHeart,LuShare2, LuPrinter  } from "react-icons/lu";
+import { LuTimer, LuUsers, LuFlame, LuHeart,LuShare2, LuPrinter,LuShoppingCart,LuCheck  } from "react-icons/lu";
 import Loader from '@/components/Loader';
-import { isRecipeFavourite, toggleFavourite, type FavouriteRecipe } from '@/shared/utils/favourites';
-type RecipeImage = {
-  id: number;
-  url: string;
-  formats?: {
-    small?: { url: string };
-    medium?: { url: string };
-    large?: { url: string };
-    thumbnail?: { url: string };
-  };
-};
-
-type Ingredient = {
-  id: number;
-  name: string;
-};
-
-type Equipment = {
-  id: number;
-  name: string;
-};
-
-type Direction = {
-  id: number;
-  description: string;
-  image?: RecipeImage;
-};
-
-type Category = {
-  id: number;
-  name: string;
-};
-
-type RecipeFromApi = {
-  id: number;
-  documentId: string;
-  name: string;
-  summary: string;
-  totalTime: number;
-  calories: number;
-  servings?: number;
-  difficulty?: string;
-  images?: RecipeImage[];
-  ingradients?: Ingredient[]; // как в API
-  equipments?: Equipment[];
-  directions?: Direction[];
-  category?: Category;
-};
-
-type StrapiSingleResponse<T> = {
-  data: T;
-};
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import { RecipeStore } from '@/stores/recipeStore';
+import { favouritesStore } from '@/stores/favouritesStore';
+import { cartStore } from '@/stores/cartStore';
 
 const Recipe: React.FC = () => {
   const { documentId } = useParams<{ documentId: string }>();
-  const [recipe, setRecipe] = useState<RecipeFromApi | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [isSaved, setIsSaved] = useState(false);
+  const store = useLocalObservable(() => new RecipeStore());
 
   useEffect(() => {
-    const fetchRecipe = async () => {
-      if (!documentId) return;
+    if (documentId) {
+      void store.fetchRecipe(documentId);
+    }
+  }, [documentId, store]);
 
-      try {
-        setLoading(true);
-        setError(null);
-
-        const query = qs.stringify(
-          {
-            populate: ['ingradients', 'equipments', 'directions.image', 'images', 'category'],
-          },
-          { encodeValuesOnly: true },
-        );
-
-        const res = await axios.get<StrapiSingleResponse<RecipeFromApi>>(
-          `https://front-school-strapi.ktsdev.ru/api/recipes/${documentId}?${query}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          },
-        );
-
-        setRecipe(res.data.data);
-        // Проверяем, сохранен ли рецепт
-        if (documentId) {
-          setIsSaved(isRecipeFavourite(documentId));
-        }
-        window.scrollTo(0, 0);
-      } catch (e: unknown) {
-        const msg =
-          axios.isAxiosError(e)
-            ? e.response?.data?.message ?? e.message
-            : e instanceof Error
-              ? e.message
-              : 'Ошибка загрузки рецепта';
-        setError(msg ?? 'Ошибка загрузки рецепта');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecipe();
-  }, [documentId]);
-
-  if (loading) {
+  const recipe = store.recipe;
+  const isSaved = recipe ? favouritesStore.isFavourite(recipe.documentId) : false;
+  
+  if (store.loading) {
     return (
       <div className={styles.recipe}>
         <div className={styles.recipe__container}><Loader size='l'/> </div>
@@ -122,7 +32,7 @@ const Recipe: React.FC = () => {
     );
   }
 
-  if (error || !recipe) {
+  if (store.error || !recipe) {
     return (
       <div className={styles.recipe}>
         <div className={styles.recipe__container}>
@@ -135,14 +45,8 @@ const Recipe: React.FC = () => {
     );
   }
 
-  const firstImage = recipe.images?.[0];
-  const rawUrl = firstImage?.formats?.medium?.url || firstImage?.formats?.small?.url || firstImage?.url || '';
-  const imageUrl = rawUrl.startsWith('http')
-    ? rawUrl
-    : rawUrl
-    ? `https://front-school.minio.ktsdev.ru/${rawUrl.replace(/^\/+/, '')}`
-    : 'https://via.placeholder.com/800x400/eee/ccc?text=No+Image';
-
+  const imageUrl = store.mainImageUrl;
+  const isInCart = recipe ? cartStore.items.some(item => item.documentId === recipe.documentId) : false;
   return (
     <div className={styles.recipe}>
       <div className={styles.recipe__hero}>
@@ -177,7 +81,7 @@ const Recipe: React.FC = () => {
             <div className={styles.recipe__statDivider}/>
             <div className={styles.recipe__statItem}>
               <LuFlame size={24}/>
-              <Text view='title' color='accent' tag='h2' className={styles.recipe__statVal} > {Math.round(recipe.calories)} kcal</Text>
+              <Text view='title' color='accent' tag='h2' className={styles.recipe__statVal} > {recipe.calories} kcal</Text>
             </div>
            
           </div>
@@ -191,7 +95,7 @@ const Recipe: React.FC = () => {
             <div className={styles.recipe__nutritionList}>
               <div className={styles.recipe__nutritionItem}>
                 <Text tag='span' view='p-16'>Proteins</Text>
-                <strong>{Math.round(recipe.calories * 0.175)}</strong>
+                <strong>{Math.round( recipe.calories * 0.175)}</strong>
               </div>
               <div className={styles.recipe__nutritionItem}>
                 <Text tag='span' view='p-16'>Fats</Text>
@@ -245,33 +149,44 @@ const Recipe: React.FC = () => {
               className={`${styles.recipe__actionBtnMain} ${isSaved ? styles.recipe__actionBtnMainSaved : ''}`}
               onClick={() => {
                 if (!recipe || !documentId) return;
-                
-                const firstImage = recipe.images?.[0];
-                const rawUrl = firstImage?.formats?.small?.url || firstImage?.url || '';
-                const imageUrl = rawUrl.startsWith('http')
-                  ? rawUrl
-                  : rawUrl
-                  ? `https://front-school.minio.ktsdev.ru/${rawUrl.replace(/^\/+/, '')}`
-                  : 'https://via.placeholder.com/400x400/eee/ccc?text=No+Image';
-
-                const favouriteRecipe: FavouriteRecipe = {
+                favouritesStore.toggle({
                   id: recipe.id,
                   documentId: recipe.documentId,
                   name: recipe.name,
                   summary: recipe.summary || 'Нет описания',
-                  totalTime: recipe.totalTime || 0,
-                  calories: recipe.calories || 0,
+                  totalTime: recipe.totalTime || '0',
+                  calories: recipe.calories || '0',
                   category: recipe.category?.name || 'All',
-                  image: imageUrl,
-                };
-                
-                toggleFavourite(favouriteRecipe);
-                setIsSaved(!isSaved);
+                  image: store.mainImageUrl,
+                });
               }}
             >
               <LuHeart size={20} fill={isSaved ? "white" : "none"} />
               <span>{isSaved ? 'In favourites' : 'Add to favourites'}</span>
             </button>
+            <button
+              className={`${styles.recipe__actionBtnMain} ${isInCart ? styles.recipe__actionBtnMainSaved : ''}`}
+              onClick={() => {
+                if (!recipe) return;
+                cartStore.addItem({
+                  documentId: recipe.documentId,
+                  name: recipe.name,
+                  image: store.mainImageUrl,
+                  calories: recipe.calories || '0',
+                  totalTime: recipe.totalTime || '0',
+                  ingredients: (recipe.ingradients || []).map((ing) => ({
+                    id: ing.id,
+                    name: ing.name,
+                    amount: ing.amount || '',
+                    unit: ing.unit || '',
+                  })),
+                });
+              }}
+            >
+              {isInCart ? <LuCheck size={20} /> : <LuShoppingCart size={20} />}
+              <span>{isInCart ? 'In cart' : 'Add to cart'}</span>
+            </button>
+
             <div className={styles.recipe__secondaryActions}>
               <button className={styles.recipe__actionBtnCircle} title="Share">
                 <LuShare2 size={20} />
@@ -301,9 +216,9 @@ const Recipe: React.FC = () => {
                       {index + 1 < 10 ? '0' : ''}
                       {index + 1}
                     </div>
-                    <div className={styles.recipe__stepText}>
-                      <h3>Step {index + 1}</h3>
-                      <Text view="p-16" color="primary">
+                    <div>
+                      <h3 className={styles.recipe__stepTextTitle}>Step {index + 1}</h3>
+                      <Text view="p-16" color="primary" className={styles.recipe__stepTextParagraph}>
                         {direction.description}
                       </Text>
                     </div>
@@ -319,4 +234,4 @@ const Recipe: React.FC = () => {
   );
 };
 
-export default Recipe;
+export default observer(Recipe);

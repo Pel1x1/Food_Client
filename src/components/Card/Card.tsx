@@ -33,12 +33,24 @@ const Card: React.FC<CardProps> = ({
   onClick,
   actionSlot,
 }) => {
+  const isClickable = Boolean(onClick);
+
+  const onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
+    if (!isClickable) return;
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault(); // Space иначе может скроллить страницу
+      onClick?.(e as unknown as React.MouseEvent<HTMLDivElement>);
+    }
+  };
+
   return (
     <div
       className={classNames(styles.card, className)}
       onClick={onClick}
-      role={onClick ? 'button' : undefined}
-      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onKeyDown}
+      role={isClickable ? 'button' : undefined}
+      tabIndex={isClickable ? 0 : undefined}
     >
       <div className={styles.imageWrapper}>
         <img className={styles.image} src={image} alt="" />
@@ -46,40 +58,33 @@ const Card: React.FC<CardProps> = ({
 
       <div className={styles.body}>
         <div className={styles.bodyText}>
-        {captionSlot && (
-          <Text className={styles.caption} weight="medium" view="p-14" color="secondary">
-            {captionSlot}
+          {captionSlot && (
+            <Text className={styles.caption} weight="medium" view="p-16" color="primary" maxLines={1}>
+              {captionSlot}
+            </Text>
+          )}
+
+          <Text className={styles.title} weight="medium" view="p-20" color="primary" maxLines={1}>
+            {title}
           </Text>
-        )}
 
-        <Text className={styles.title} weight="medium" view="p-20" color="primary" maxLines={2}>
-          {title}
-        </Text>
-
-        <Text className={styles.subtitle} weight="normal" view="p-16" color="secondary" maxLines={3}>
-          {subtitle}
-        </Text>
+          <Text className={styles.subtitle} weight="normal" view="p-16" color="secondary" maxLines={3}>
+            {subtitle}
+          </Text>
         </div>
-      
-      {(contentSlot || actionSlot) && (
+
+        {(contentSlot || actionSlot) && (
           <div className={styles.footer}>
-            {contentSlot && (
-              <div className={styles.content}>
-                {contentSlot}
-              </div>
-            )}
+            {contentSlot && <div className={styles.content}>{contentSlot}</div>}
 
             {actionSlot && (
-              <div
-                className={styles.action}
-                onClick={(e) => e.stopPropagation()}
-              >
+              <div className={styles.action} onClick={(e) => e.stopPropagation()}>
                 {actionSlot}
               </div>
             )}
           </div>
         )}
-        </div>
+      </div>
     </div>
   );
 };

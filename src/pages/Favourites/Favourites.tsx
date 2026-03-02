@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Text from '@/components/Text';
 import styles from './Favourites.module.scss';
 import Button from '@/components/Button';
 import TimerIcon from '@/components/icons/TimerIcon';
 import Card from '@/components/Card';
+import Loader from '@/components/Loader';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { getFavouriteRecipes, removeFromFavourites, type FavouriteRecipe } from '@/shared/utils/favourites';
+import { observer } from 'mobx-react-lite';
+import { favouritesStore } from '@/stores/favouritesStore';
 import { LuHeart } from 'react-icons/lu';
+import { AppRoutePaths } from '@/shared/config/routes';
 
-// Анимация контейнера
-const gridContainerVariants: Variants = {
-  hidden: { opacity: 0 },
+
+export const gridContainerVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
+    y: 0,
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2,
@@ -21,12 +25,12 @@ const gridContainerVariants: Variants = {
   },
 };
 
-// Анимация отдельной карточки
-const cardVariants: Variants = {
+
+export const cardVariants: Variants = {
   hidden: { 
     opacity: 0, 
     y: 50, 
-    scale: 0.95 
+    scale: 0.95,
   },
   visible: { 
     opacity: 1, 
@@ -36,91 +40,75 @@ const cardVariants: Variants = {
       type: 'spring',
       stiffness: 100, 
       damping: 15,
-      mass: 1 
-    }
+      mass: 1,
+    },
   },
   exit: { 
     opacity: 0, 
     scale: 0.9, 
-    transition: { duration: 0.2 } 
-  }
+    transition: { duration: 0.2 },
+  },
 };
 
-// Анимация Hero
-const heroVariants: Variants = {
+
+export const headerVariants: Variants = {
   hidden: { opacity: 0, y: -20 },
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.6, ease: "easeOut" } 
-  }
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
 };
 
+
 const Favourites: React.FC = () => {
-  const [favouriteRecipes, setFavouriteRecipes] = useState<FavouriteRecipe[]>([]);
+  const favouriteRecipes = favouritesStore.items;
+  const isLoading = favouritesStore.isLoading;
 
-  useEffect(() => {
-    // Загружаем избранные рецепты при монтировании
-    const favourites = getFavouriteRecipes();
-    setFavouriteRecipes(favourites);
-  }, []);
-
-  const handleRemoveFromFavourites = (documentId: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    removeFromFavourites(documentId);
-    setFavouriteRecipes((prev) => prev.filter((r) => r.documentId !== documentId));
-  };
+  if (isLoading) {
+    return (
+      <div className={styles.favouritesPage}>
+        <div className={styles.favouritesPage__container}>
+          <div className={styles.favouritesPage__noResults}>
+            <Loader size="l" />
+            <Text view="p-16">Loading favourites...</Text>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.favouritesPage}>
-      {/* Hero секция */}
-      <section className={styles.favouritesPage__hero}>
-        <div className={styles.favouritesPage__heroOverlay}></div>
-        <motion.div 
-          className={styles.favouritesPage__heroContent}
+      <div className={styles.favouritesPage__container}>
+        {favouriteRecipes.length === 0 ? (<div/>) : (
+        <motion.header
+          className={styles.favouritesPage__header}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={heroVariants}
+          variants={headerVariants}
         >
-          <motion.h1 
-            className={styles.favouritesPage__heroTitle}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            Favourites
-          </motion.h1>
-          <motion.p 
-            className={styles.favouritesPage__heroSubtitle}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.9 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
-            Your saved recipes collection. Click on any recipe to view full details.
-          </motion.p>
-        </motion.div>
-      </section>
+          <h1>Favourites</h1>
+          <p>Your saved recipes collection. Click on any recipe to view full details.</p>
+        </motion.header>
+        )}
 
-      {/* Секция с рецептами */}
-      <section className={styles.favouritesPage__gridSection}>
-        <div className={styles.favouritesPage__container}>
+        {/* Секция с рецептами */}
+        <section className={styles.favouritesPage__gridSection}>
           <AnimatePresence mode="wait">
             {favouriteRecipes.length === 0 ? (
               <motion.div 
                 key="empty"
-                className={styles.favouritesPage__noResults}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                className={styles.emptyFavourites}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
               >
-                <LuHeart size={64} style={{ marginBottom: '1rem', opacity: 0.3 }} />
-                <h3>No favourites yet</h3>
-                <p>Start saving your favourite recipes to see them here!</p>
-                <Link to="/">
-                  <Button style={{ marginTop: '1rem' }}>Browse Recipes</Button>
-                </Link>
+                <LuHeart size={80} className={styles.emptyIcon} />
+                <Text view="title" tag="h2">No favourites yet</Text>
+                <Text view="p-16">Start saving your favourite recipes to see them here!</Text>
+                <Link to={AppRoutePaths.home} className={styles.exploreBtn}>Browse Recipes</Link>
               </motion.div>
             ) : (
               <motion.div 
@@ -147,12 +135,12 @@ const Favourites: React.FC = () => {
                         exit="exit"
                         whileHover={{ 
                           y: -8, 
-                          transition: { duration: 0.3 } 
+                          transition: { duration: 0.3 },
                         }}
                         style={{ height: '100%' }}
                       >
                         <Link
-                          to={`/recipe/${recipe.documentId}`}
+                          to={AppRoutePaths.recipeById(recipe.documentId)}
                           style={{ textDecoration: 'none', height: '100%', display: 'block' }}
                         >
                           <Card
@@ -167,12 +155,16 @@ const Favourites: React.FC = () => {
                             subtitle={recipe.summary}
                             contentSlot={
                               <Text view="p-20" weight="medium" color="accent">
-                                {Math.round(recipe.calories)} kcal
+                                {recipe.calories} kcal
                               </Text>
                             }
                             actionSlot={
                               <Button
-                                onClick={(e) => handleRemoveFromFavourites(recipe.documentId, e)}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  void favouritesStore.remove(recipe); 
+                                }}
                               >
                                 <LuHeart size={16} fill="currentColor" style={{ marginRight: '4px' }} />
                                 Remove
@@ -187,10 +179,10 @@ const Favourites: React.FC = () => {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 };
 
-export default Favourites;
+export default observer(Favourites);

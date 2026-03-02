@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import cn from 'classnames';
 import Input from '@/components/Input';
 import ArrowDownIcon from '@/components/icons/ArrowDownIcon';
-import styles from './MultiDropdown.module.scss';
-
+import s from "./MultiDropdown.module.scss";
 export type Option = {
   key: string;
   value: string;
@@ -82,8 +81,8 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   };
 
   return (
-    <div ref={rootRef} className={cn(styles.multiDropdown, className)}>
-      <div onClick={handleInputClick}>
+    <div ref={rootRef} className={cn(s.multiDropdown, className)}>
+      <div className={s.multiDropdownControl} onClick={handleInputClick}>
         <Input
           value={inputValue}
           placeholder={placeholder}
@@ -94,15 +93,15 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       </div>
 
       {isOpen && !disabled && (
-        <div className={styles.optionsList}>
+        <div className={s.optionsList}>
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option) => {
               const isSelected = value.some((v) => v.key === option.key);
               return (
                 <div
                   key={option.key}
-                  className={cn(styles.option, {
-                    [styles.optionSelected]: isSelected,
+                  className={cn(s.option, {
+                    [s.optionSelected]: isSelected,
                   })}
                   onClick={() => handleOptionClick(option)}
                 >
@@ -111,7 +110,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
               );
             })
           ) : (
-            <div className={styles.empty}>Нет совпадений</div>
+            <div className={s.empty}>Нет совпадений</div>
           )}
         </div>
       )}
